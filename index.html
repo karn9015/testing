@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jivan Veda — Sugar Control</title>
+<script>
+// Inject Meta Pixel from admin settings (runs before page renders)
+(function() {
+  try {
+    var pid = localStorage.getItem('jv_meta_pixel');
+    if (pid && pid.trim()) {
+      pid = pid.trim();
+      var s = document.createElement('script');
+      s.text = '!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","' + pid + '");fbq("track","PageView");';
+      document.head.appendChild(s);
+      var ns = document.createElement('noscript');
+      ns.innerHTML = '<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=' + pid + '&ev=PageView&noscript=1"/>';
+      document.head.appendChild(ns);
+      window._jv_pixel_id = pid;
+    }
+  } catch(e) {}
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #FAFAF7;
+  --bg2: #F3F0E8;
+  --surface: #FFFFFF;
+  --border: rgba(0,0,0,0.08);
+  --green: #1B7A4A;
+  --green-light: #2E9D60;
+  --green-dim: rgba(27,122,74,0.1);
+  --saffron: #D4700A;
+  --saffron-light: #E8860A;
+  --saffron-dim: rgba(212,112,10,0.1);
+  --gold: #C9920A;
+  --red: #C0392B;
+  --text: #1A1F1C;
+  --text-dim: #5A6B60;
+  --text-muted: #8A9B90;
+  --fd: 'Syne', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'DM Mono', monospace;
+  --r: 12px;
+  --r2: 20px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+button { cursor: pointer; border: none; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+a { text-decoration: none; color: inherit; }
+
+/* ── HEADER ── */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(250,250,247,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.header-logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.header-logo-text {
+  font-family: var(--fd);
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+}
+.header-logo-text span { color: var(--green); }
+.header-trust {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--text-muted); font-weight: 600;
+}
+.header-trust .dot { color: var(--green); font-size: 16px; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, #FAFAF7 0%, #EDF5F0 50%, #F5F0E8 100%);
+  padding: 60px 20px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(27,122,74,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(212,112,10,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1000px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  position: relative; z-index: 1;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--green-dim);
+  border: 1px solid rgba(27,122,74,0.2);
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.hero-headline {
+  font-family: var(--fd);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+.hero-headline span { color: var(--green); }
+.hero-subline {
+  font-size: 16px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.hero-price-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.price-main {
+  font-family: var(--fd);
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+.price-old {
+  font-size: 22px;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  font-family: var(--fm);
+}
+.price-save {
+  background: var(--red);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--fm);
+}
+.hero-trust-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.trust-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dim);
+}
+.trust-pill .tp-icon { font-size: 15px; }
+
+/* QTY & ORDER */
+.order-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+.qty-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.qty-selector {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  width: fit-content;
+  margin-bottom: 16px;
+}
+.qty-btn {
+  width: 44px; height: 44px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.qty-btn:hover { background: var(--green-dim); color: var(--green); }
+.qty-num {
+  min-width: 48px;
+  text-align: center;
+  font-family: var(--fd);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+}
+.order-total {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  font-family: var(--fm);
+}
+.order-total strong { color: var(--green); font-size: 16px; }
+.btn-order {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  color: white;
+  font-family: var(--fd);
+  font-size: 17px;
+  font-weight: 800;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 6px 20px rgba(27,122,74,0.35);
+}
+.btn-order:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(27,122,74,0.4);
+}
+.btn-order-sub {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+/* Product Image Side */
+.hero-img-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.hero-img-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+}
+.hero-img-circle {
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(27,122,74,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.hero-product-img {
+  width: 280px; height: 280px;
+  object-fit: contain;
+  border-radius: 20px;
+  display: none;
+}
+.hero-placeholder-img {
+  width: 280px; height: 280px;
+  background: linear-gradient(135deg, #E8F5EE 0%, #C8E6D4 100%);
+  border-radius: 20px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  border: 2px dashed rgba(27,122,74,0.2);
+}
+.hero-placeholder-img .ph-icon { font-size: 64px; }
+.hero-placeholder-img .ph-text {
+  font-family: var(--fd);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green);
+  text-align: center;
+  line-height: 1.4;
+}
+.hero-img-badge {
+  position: absolute;
+  top: 20px; right: 0;
+  background: var(--saffron);
+  color: white;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 8px 14px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(212,112,10,0.4);
+  font-family: var(--fd);
+  white-space: nowrap;
+}
+.hero-img-badge2 {
+  position: absolute;
+  bottom: 20px; left: 0;
+  background: var(--green);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(27,122,74,0.4);
+  font-family: var(--fm);
+}
+
+/* ── COD BADGE ── */
+.cod-banner {
+  background: linear-gradient(135deg, #FFF8E8, #FFF3D0);
+  border: 1px solid rgba(212,112,10,0.2);
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--saffron);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ── BENEFITS SECTION ── */
+.section {
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.section-label {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 12px;
+}
+.section-title {
+  text-align: center;
+  font-family: var(--fd);
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 40px;
+  line-height: 1.25;
+}
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.benefit-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 28px 24px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), var(--green-light));
+}
+.benefit-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+.benefit-icon { font-size: 32px; margin-bottom: 14px; display: block; }
+.benefit-title {
+  font-family: var(--fd);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.benefit-desc { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+/* ── TESTIMONIALS ── */
+.testi-section {
+  background: linear-gradient(160deg, #EDF5F0, #FAFAF7);
+  padding: 60px 20px;
+}
+.testi-inner { max-width: 1000px; margin: 0 auto; }
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.testi-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  padding: 28px 24px;
+  position: relative;
+}
+.testi-quote {
+  font-size: 40px;
+  color: var(--green-dim);
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: Georgia, serif;
+  color: var(--green);
+  opacity: 0.3;
+}
+.testi-text {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testi-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.testi-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.testi-stars { color: #F5A623; font-size: 13px; }
+
+/* ── ORDER FORM ── */
+.order-section {
+  padding: 60px 20px;
+  background: var(--bg2);
+}
+.order-form-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+}
+.form-card-header {
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  padding: 28px 32px;
+  color: white;
+}
+.form-card-header h2 {
+  font-family: var(--fd);
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.form-card-header p { font-size: 14px; opacity: 0.85; }
+.form-body { padding: 32px; }
+.ff { margin-bottom: 18px; }
+.ff label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 7px;
+}
+.fi {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.fi:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(27,122,74,0.1);
+}
+.fi::placeholder { color: var(--text-muted); }
+.ff-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-summary {
+  background: var(--green-dim);
+  border: 1px solid rgba(27,122,74,0.2);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-summary-label { font-size: 14px; font-weight: 600; color: var(--text-dim); }
+.form-summary-total {
+  font-family: var(--fd);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--green);
+}
+.btn-submit {
+  width: 100%;
+  padding: 17px;
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  color: white;
+  font-family: var(--fd);
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 6px 20px rgba(27,122,74,0.35);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(27,122,74,0.4); }
+.form-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 14px;
+  font-weight: 600;
+}
+
+/* ── SUCCESS MESSAGE ── */
+.success-msg {
+  display: none;
+  background: linear-gradient(135deg, #EDF5F0, #F5F0E8);
+  border: 1px solid rgba(27,122,74,0.2);
+  border-radius: var(--r2);
+  padding: 40px 32px;
+  text-align: center;
+}
+.success-msg.show { display: block; }
+.success-icon { font-size: 56px; margin-bottom: 16px; }
+.success-title {
+  font-family: var(--fd);
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.success-sub { font-size: 15px; color: var(--text-dim); line-height: 1.6; }
+.success-order-id {
+  display: inline-block;
+  margin-top: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-family: var(--fm);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green);
+}
+.btn-wa-order {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+}
+.btn-wa-order:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
+
+/* ── FOOTER ── */
+footer {
+  background: #1A1F1C;
+  color: rgba(255,255,255,0.6);
+  padding: 40px 20px;
+  text-align: center;
+}
+.footer-logo {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.footer-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.footer-logo-text {
+  font-family: var(--fd);
+  font-size: 16px;
+  font-weight: 800;
+  color: white;
+}
+.footer-logo-text span { color: var(--green-light); }
+footer p { font-size: 13px; line-height: 1.7; }
+footer .fssai {
+  margin-top: 12px;
+  font-family: var(--fm);
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ── STICKY BAR ── */
+.sticky-bar {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: white;
+  border-top: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  z-index: 99;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+  transform: translateY(100%);
+  transition: transform 0.4s;
+}
+.sticky-bar.visible { transform: translateY(0); }
+.sticky-price {
+  font-family: var(--fd);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--green);
+}
+.sticky-price span {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: var(--text-muted);
+  margin-left: 6px;
+}
+.btn-sticky {
+  padding: 12px 28px;
+  background: linear-gradient(135deg, var(--green), #0D5A34);
+  color: white;
+  font-family: var(--fd);
+  font-size: 15px;
+  font-weight: 800;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(27,122,74,0.35);
+}
+.btn-sticky:hover { transform: translateY(-1px); }
+
+/* ── WHATSAPP FLOAT ── */
+.wa-float {
+  position: fixed;
+  bottom: 80px; right: 20px;
+  width: 56px; height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  z-index: 98;
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-decoration: none;
+}
+.wa-float:hover { transform: scale(1.1); }
+
+/* TOAST */
+.toast {
+  position: fixed;
+  bottom: 100px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1A1F1C;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.3s;
+  white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-img-side { order: -1; }
+  .hero-img-circle { width: 260px; height: 260px; }
+  .hero-product-img, .hero-placeholder-img { width: 200px; height: 200px; }
+  .hero-headline { font-size: 28px; }
+  .hero-price-row { justify-content: center; }
+  .hero-trust-row { justify-content: center; }
+  .hero-img-badge, .hero-img-badge2 { display: none; }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
+  .ff-row { grid-template-columns: 1fr; }
+  .form-body { padding: 20px; }
+  .sticky-bar { flex-direction: column; gap: 10px; }
+  .btn-sticky { width: 100%; }
+}
+@media(max-width: 480px) {
+  .hero { padding: 40px 16px 28px; }
+  .section { padding: 40px 16px; }
+  .order-section { padding: 40px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div class="header-logo-icon">🌿</div>
+    <div class="header-logo-text">Jivan <span>Veda</span></div>
+  </div>
+  <div class="header-trust">
+    <span class="dot">●</span>
+    <span>100% Ayurvedic · COD Available</span>
+  </div>
+</header>
+
+<!-- COD BANNER -->
+<div class="cod-banner" id="cod-banner">
+  <span>🚚</span>
+  <span>FREE DELIVERY + CASH ON DELIVERY AVAILABLE ACROSS INDIA</span>
+  <span>⭐ 50,000+ Happy Customers</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">🌿 Ayurvedic · 100% Natural</div>
+      <h1 class="hero-headline" id="hero-headline">Control Sugar <span>Naturally</span> — Without Harsh Medicines</h1>
+      <p class="hero-subline" id="hero-subline">Jivan Veda Sugar Control is an ancient Ayurvedic blend of 12 powerful herbs, clinically studied to support healthy blood sugar levels, boost energy, and reduce sugar cravings — naturally.</p>
+
+      <div class="hero-price-row">
+        <div class="price-main" id="price-main">₹599</div>
+        <div class="price-old" id="price-old">₹999</div>
+        <div class="price-save" id="price-save">40% OFF</div>
+      </div>
+
+      <div class="hero-trust-row">
+        <div class="trust-pill"><span class="tp-icon">✅</span> COD Available</div>
+        <div class="trust-pill"><span class="tp-icon">🚚</span> Free Delivery</div>
+        <div class="trust-pill"><span class="tp-icon">🔒</span> 100% Safe</div>
+        <div class="trust-pill"><span class="tp-icon">⭐</span> 4.8/5 Rating</div>
+      </div>
+
+      <div class="order-box">
+        <div class="qty-label">Select Quantity</div>
+        <div class="qty-selector">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <div class="qty-num" id="hero-qty">1</div>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <div class="order-total" id="hero-total">Total: <strong>₹599</strong> · Free Delivery</div>
+        <button class="btn-order" onclick="scrollToOrder()">
+          🛒 Order Now — Cash on Delivery
+        </button>
+        <div class="btn-order-sub">No advance payment · Pay when delivered</div>
+      </div>
+    </div>
+
+    <div class="hero-img-side">
+      <div class="hero-img-wrap">
+        <div class="hero-img-circle">
+          <img id="hero-product-img" class="hero-product-img" src="" alt="Jivan Veda Sugar Control">
+          <div class="hero-placeholder-img" id="hero-placeholder">
+            <span class="ph-icon">🌿</span>
+            <div class="ph-text">Jivan Veda<br>Sugar Control</div>
+          </div>
+        </div>
+        <div class="hero-img-badge">✅ COD Available</div>
+        <div class="hero-img-badge2">📦 Free Shipping</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section style="background: var(--bg); padding: 60px 20px;">
+  <div style="max-width:1000px;margin:0 auto">
+    <div class="section-label">Why Choose Us</div>
+    <h2 class="section-title" id="benefits-title">6 Proven Benefits of Our Ayurvedic Formula</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🩸</span>
+        <div class="benefit-title">Controls Blood Sugar</div>
+        <div class="benefit-desc">Clinically studied herbs like Karela, Jamun, and Gurmar help regulate fasting and post-meal glucose levels naturally.</div>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">⚡</span>
+        <div class="benefit-title">Boosts Energy</div>
+        <div class="benefit-desc">Ashwagandha and Shilajit improve cellular energy, reducing diabetic fatigue and restoring vitality.</div>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🍬</span>
+        <div class="benefit-title">Reduces Sugar Cravings</div>
+        <div class="benefit-desc">Gurmar — the "sugar destroyer" — naturally suppresses sweet cravings, making it easier to stay on track.</div>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">💊</span>
+        <div class="benefit-title">Supports Insulin Function</div>
+        <div class="benefit-desc">Methi and Vijaysar improve insulin sensitivity, helping your body use glucose more effectively.</div>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🫀</span>
+        <div class="benefit-title">Protects Heart Health</div>
+        <div class="benefit-desc">Arjuna and Amla support cardiovascular health, often compromised by long-term blood sugar issues.</div>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🌿</span>
+        <div class="benefit-title">100% Natural & Safe</div>
+        <div class="benefit-desc">No steroids, no harmful chemicals. Pure Ayurvedic herbs with zero known side effects. FSSAI certified.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="testi-inner">
+    <div class="section-label">Real Results</div>
+    <h2 class="section-title" id="testi-title">50,000+ Happy Customers Across India</h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <p class="testi-text" id="testi1">Meri fasting sugar 210 se 130 ho gayi sirf 45 din mein! Jivan Veda ne meri zindagi badal di.</p>
+        <div class="testi-author">
+          <div class="testi-avatar" id="tav1">R</div>
+          <div>
+            <div class="testi-name" id="tname1">Ramesh G., Jaipur</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <p class="testi-text" id="testi2">Main 10 saal se diabetes ki medicine le rahi thi. Jivan Veda se doctor ne dose aadhi kar di!</p>
+        <div class="testi-author">
+          <div class="testi-avatar" id="tav2" style="background:linear-gradient(135deg,var(--saffron),#9B5200)">P</div>
+          <div>
+            <div class="testi-name" id="tname2">Priya S., Bangalore</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">"</div>
+        <p class="testi-text" id="testi3">Mera HbA1c 8.9 tha jo ab 6.7 aa gaya hai. COD delivery bahut convenient hai!</p>
+        <div class="testi-author">
+          <div class="testi-avatar" id="tav3" style="background:linear-gradient(135deg,#5B8AF0,#2D5AB0)">A</div>
+          <div>
+            <div class="testi-name" id="tname3">Arun K., Delhi</div>
+            <div class="testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section class="order-section" id="order-section">
+  <div class="order-form-inner">
+    <div class="section-label" style="text-align:center;margin-bottom:8px">Place Your Order</div>
+    <h2 class="section-title" style="margin-bottom:24px">Order Now — Pay on Delivery</h2>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <h2>🛒 Place Your Order</h2>
+        <p>Fill in your details — we'll ship within 24 hours. Pay cash on delivery.</p>
+      </div>
+
+      <div class="form-body" id="order-form-body">
+        <div class="ff-row">
+          <div class="ff">
+            <label>Full Name *</label>
+            <input class="fi" id="f-name" placeholder="Your full name" type="text">
+          </div>
+          <div class="ff">
+            <label>Mobile Number *</label>
+            <input class="fi" id="f-phone" placeholder="10-digit mobile" type="tel" maxlength="10">
+          </div>
+        </div>
+
+        <div class="ff">
+          <label>Delivery Address *</label>
+          <input class="fi" id="f-address" placeholder="House no, Street, Area">
+        </div>
+
+        <div class="ff">
+          <label>PIN Code * <span id="pin-status" style="font-size:11px;font-weight:600;margin-left:4px"></span></label>
+          <input class="fi" id="f-pin" placeholder="Enter 6-digit PIN — city &amp; state auto-fill" type="tel" maxlength="6" oninput="onPinInput(this.value)">
+        </div>
+
+        <div class="ff-row">
+          <div class="ff">
+            <label>City / District</label>
+            <input class="fi" id="f-city" placeholder="Auto-filled from PIN" readonly style="background:var(--bg2);cursor:default;color:var(--text-dim)">
+          </div>
+          <div class="ff">
+            <label>State</label>
+            <input class="fi" id="f-state" placeholder="Auto-filled from PIN" readonly style="background:var(--bg2);cursor:default;color:var(--text-dim)">
+          </div>
+        </div>
+
+        <div class="ff">
+          <label>Quantity</label>
+          <div style="display:flex;align-items:center;gap:14px">
+            <div class="qty-selector" style="background:var(--bg2)">
+              <button class="qty-btn" onclick="changeFormQty(-1)">−</button>
+              <div class="qty-num" id="form-qty">1</div>
+              <button class="qty-btn" onclick="changeFormQty(1)">+</button>
+            </div>
+            <div style="font-size:14px;color:var(--text-dim)" id="form-per-unit">₹599 per bottle</div>
+          </div>
+        </div>
+
+        <div class="form-summary">
+          <div class="form-summary-label">Total Amount (Pay on Delivery)</div>
+          <div class="form-summary-total" id="form-total">₹599</div>
+        </div>
+
+        <div id="form-err" style="background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.25);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:14px;display:none"></div>
+
+        <button class="btn-submit" onclick="submitOrder()">
+          ✅ Confirm Order — Cash on Delivery
+        </button>
+        <div class="form-note">📦 Free delivery · No advance payment needed · Ships in 24hrs</div>
+      </div>
+
+      <!-- Success -->
+      <div class="success-msg" id="success-msg">
+        <div class="success-icon">🎉</div>
+        <div class="success-title">Order Placed Successfully!</div>
+        <div class="success-sub">Thank you! Your order has been confirmed. We'll ship within 24 hours and call you before delivery.<br>Pay cash when your package arrives.</div>
+        <div class="success-order-id" id="success-order-id">Order ID: JV100001</div>
+        <br>
+        <a id="wa-confirm-link" href="#" target="_blank" class="btn-wa-order">
+          💬 Confirm on WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <div class="footer-logo-icon">🌿</div>
+    <div class="footer-logo-text">Jivan <span>Veda</span></div>
+  </div>
+  <p>Ancient Ayurvedic Wisdom, Modern Health Solutions<br>Trusted by 50,000+ families across India</p>
+  <div class="fssai">FSSAI Reg. No: 10719022000832 · All products are 100% natural & safe</div>
+</footer>
+
+<!-- STICKY BAR -->
+<div class="sticky-bar" id="sticky-bar">
+  <div>
+    <div class="sticky-price" id="sticky-price">₹599 <span id="sticky-oldprice">₹999</span></div>
+    <div style="font-size:12px;color:var(--text-muted);margin-top:2px">✅ COD · 🚚 Free Delivery</div>
+  </div>
+  <button class="btn-sticky" onclick="scrollToOrder()">Order Now →</button>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a id="wa-float" href="#" target="_blank" class="wa-float" title="WhatsApp us">💬</a>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ────────────────────────────────────────
+   DATABASE (shared with admin panel)
+──────────────────────────────────────── */
+const DB = {
+  getOrders:   () => { try { return JSON.parse(localStorage.getItem('jv_orders') || '[]'); } catch { return []; } },
+  saveOrders:  (o) => localStorage.setItem('jv_orders', JSON.stringify(o)),
+  getSettings: () => { try { return JSON.parse(localStorage.getItem('jv_settings') || 'null'); } catch { return null; } },
+  getProductImage: () => localStorage.getItem('jv_product_img') || null
+};
+
+const DEFAULTS = {
+  productName: 'Jivan Veda Sugar Control',
+  price: 599, oldPrice: 999,
+  whatsapp: '919876543210',
+  headline: 'Control Sugar Naturally — Without Harsh Medicines',
+  subline: 'Jivan Veda Sugar Control is an ancient Ayurvedic blend of 12 powerful herbs, clinically studied to support healthy blood sugar levels, boost energy, and reduce sugar cravings — naturally.',
+  bentitle: '6 Proven Benefits of Our Ayurvedic Formula',
+  testitle: '50,000+ Happy Customers Across India',
+  testi1: 'Meri fasting sugar 210 se 130 ho gayi sirf 45 din mein! Jivan Veda ne meri zindagi badal di.',
+  testi2: 'Main 10 saal se diabetes ki medicine le rahi thi. Jivan Veda se doctor ne dose aadhi kar di!',
+  testi3: 'Mera HbA1c 8.9 tha jo ab 6.7 aa gaya hai. COD delivery bahut convenient hai!',
+  features: { cod: true, wa: true, fd: true, sticky: true }
+};
+
+let S = Object.assign({}, DEFAULTS, DB.getSettings() || {});
+let heroQty = 1;
+let formQty = 1;
+
+/* ────────────────────────────────────────
+   INIT
+──────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  loadSettings();
+  loadProductImage();
+  initStickyBar();
+  updateHeroQty();
+  updateFormQty();
+});
+
+function loadSettings() {
+  S = Object.assign({}, DEFAULTS, DB.getSettings() || {});
+  const feat = S.features || {};
+
+  // Headline / subline
+  const hl = document.getElementById('hero-headline');
+  if (hl && S.headline) hl.innerHTML = S.headline.replace(/(Sugar|Control|Natural)/gi, m => `<span>${m}</span>`);
+  const sl = document.getElementById('hero-subline');
+  if (sl && S.subline) sl.textContent = S.subline;
+
+  // Prices
+  const pm = document.getElementById('price-main');
+  const po = document.getElementById('price-old');
+  const ps = document.getElementById('price-save');
+  const sp = document.getElementById('sticky-price');
+  const sop = document.getElementById('sticky-oldprice');
+  if (pm) pm.textContent = '₹' + S.price;
+  if (po) po.textContent = '₹' + S.oldPrice;
+  const disc = Math.round((1 - S.price / S.oldPrice) * 100);
+  if (ps) ps.textContent = disc + '% OFF';
+  if (sp) sp.innerHTML = '₹' + S.price + ' <span id="sticky-oldprice">₹' + S.oldPrice + '</span>';
+
+  // Section titles
+  const bt = document.getElementById('benefits-title');
+  if (bt && S.bentitle) bt.textContent = S.bentitle;
+  const tt = document.getElementById('testi-title');
+  if (tt && S.testitle) tt.textContent = S.testitle;
+
+  // Testimonials
+  const t1 = document.getElementById('testi1');
+  const t2 = document.getElementById('testi2');
+  const t3 = document.getElementById('testi3');
+  if (t1 && S.testi1) t1.textContent = S.testi1;
+  if (t2 && S.testi2) t2.textContent = S.testi2;
+  if (t3 && S.testi3) t3.textContent = S.testi3;
+
+  // WhatsApp
+  const waFloat = document.getElementById('wa-float');
+  if (waFloat) waFloat.href = 'https://wa.me/' + (S.whatsapp || '919876543210');
+
+  // Features
+  const codBanner = document.getElementById('cod-banner');
+  if (codBanner) codBanner.style.display = feat.cod === false ? 'none' : '';
+
+  const waEl = document.getElementById('wa-float');
+  if (waEl) waEl.style.display = feat.wa === false ? 'none' : '';
+
+  // Free delivery badge in trust row
+  // (sticky bar controlled below)
+}
+
+function loadProductImage() {
+  const img = DB.getProductImage();
+  const productImg = document.getElementById('hero-product-img');
+  const placeholder = document.getElementById('hero-placeholder');
+  if (img && productImg) {
+    productImg.src = img;
+    productImg.style.display = 'block';
+    if (placeholder) placeholder.style.display = 'none';
+  }
+}
+
+/* ────────────────────────────────────────
+   QTY CONTROLS
+──────────────────────────────────────── */
+function changeQty(d) {
+  heroQty = Math.max(1, Math.min(10, heroQty + d));
+  formQty = heroQty;
+  updateHeroQty();
+  updateFormQty();
+}
+
+function changeFormQty(d) {
+  formQty = Math.max(1, Math.min(10, formQty + d));
+  heroQty = formQty;
+  updateHeroQty();
+  updateFormQty();
+}
+
+function updateHeroQty() {
+  const qEl = document.getElementById('hero-qty');
+  const tEl = document.getElementById('hero-total');
+  if (qEl) qEl.textContent = heroQty;
+  const total = heroQty * S.price;
+  const feat = S.features || {};
+  const fdText = feat.fd !== false ? ' · Free Delivery' : '';
+  if (tEl) tEl.innerHTML = `Total: <strong>₹${total.toLocaleString('en-IN')}</strong>${fdText}`;
+}
+
+function updateFormQty() {
+  const qEl = document.getElementById('form-qty');
+  const tEl = document.getElementById('form-total');
+  const puEl = document.getElementById('form-per-unit');
+  if (qEl) qEl.textContent = formQty;
+  const total = formQty * S.price;
+  if (tEl) tEl.textContent = '₹' + total.toLocaleString('en-IN');
+  if (puEl) puEl.textContent = '₹' + S.price + ' per bottle';
+}
+
+/* ────────────────────────────────────────
+   STICKY BAR
+──────────────────────────────────────── */
+function initStickyBar() {
+  const feat = S.features || {};
+  if (feat.sticky === false) return;
+
+  const bar = document.getElementById('sticky-bar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      bar.classList.add('visible');
+    } else {
+      bar.classList.remove('visible');
+    }
+  });
+}
+
+/* ────────────────────────────────────────
+   SCROLL TO ORDER
+──────────────────────────────────────── */
+function scrollToOrder() {
+  document.getElementById('order-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+/* ────────────────────────────────────────
+   SUBMIT ORDER
+──────────────────────────────────────── */
+function submitOrder() {
+  const name    = document.getElementById('f-name').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const address = document.getElementById('f-address').value.trim();
+  const city    = document.getElementById('f-city').value.trim();
+  const state   = document.getElementById('f-state').value.trim();
+  const pin     = document.getElementById('f-pin').value.trim();
+  const errEl   = document.getElementById('form-err');
+
+  // Validation
+  if (!name) { showErr('Please enter your full name.'); return; }
+  if (!phone || !/^\d{10}$/.test(phone)) { showErr('Please enter a valid 10-digit mobile number.'); return; }
+  if (!address) { showErr('Please enter your delivery address.'); return; }
+  if (!pin || !/^\d{6}$/.test(pin)) { showErr('Please enter a valid 6-digit PIN code.'); return; }
+  if (!city || !state) { showErr('Please wait for PIN code lookup or enter a valid PIN code.'); return; }
+  if (errEl) errEl.style.display = 'none';
+
+  // Generate order ID
+  const orders = DB.getOrders();
+  const lastNum = orders.length > 0
+    ? Math.max(...orders.map(o => parseInt(o.id.replace('JV', '')) || 100000))
+    : 100000;
+  const orderId = 'JV' + String(lastNum + 1).padStart(6, '0');
+
+  const order = {
+    id: orderId,
+    name, phone,
+    address: `${address}, ${city}, ${state}`,
+    city, state, pincode: pin,
+    quantity: formQty,
+    unit_price: S.price,
+    total_price: formQty * S.price,
+    status: 'New',
+    created_at: new Date().toISOString()
+  };
+
+  orders.push(order);
+  DB.saveOrders(orders);
+
+  // Fire Meta Pixel Purchase event if pixel is active
+  try {
+    if (window._jv_pixel_id && typeof fbq === 'function') {
+      fbq('track', 'Purchase', {
+        value: order.total_price,
+        currency: 'INR',
+        content_ids: ['jivan-veda-sugar-control'],
+        content_type: 'product',
+        num_items: formQty
+      });
+    }
+  } catch(e) {}
+
+  // Show success
+  document.getElementById('order-form-body').style.display = 'none';
+  const successEl = document.getElementById('success-msg');
+  if (successEl) successEl.classList.add('show');
+  document.getElementById('success-order-id').textContent = 'Order ID: ' + orderId;
+
+  // WhatsApp confirmation link
+  const waMsg = encodeURIComponent(
+    `🌿 *Jivan Veda Order Confirmed!*\n\nOrder ID: ${orderId}\nName: ${name}\nPhone: ${phone}\nAddress: ${address}, ${city}, ${state} - ${pin}\nQty: ${formQty} bottle(s)\nTotal: ₹${(formQty * S.price).toLocaleString('en-IN')}\n\n✅ Payment: Cash on Delivery\n📦 Free Shipping`
+  );
+  const waLink = document.getElementById('wa-confirm-link');
+  if (waLink) waLink.href = `https://wa.me/${S.whatsapp || '919876543210'}?text=${waMsg}`;
+
+  toast('🎉 Order placed! Order ID: ' + orderId);
+
+  // Scroll to success
+  successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function showErr(msg) {
+  const errEl = document.getElementById('form-err');
+  if (errEl) { errEl.textContent = msg; errEl.style.display = 'block'; }
+}
+
+/* ────────────────────────────────────────
+   PINCODE AUTO-FETCH (India Post API)
+──────────────────────────────────────── */
+let pinTimer = null;
+
+function onPinInput(val) {
+  const statusEl = document.getElementById('pin-status');
+  const cityEl   = document.getElementById('f-city');
+  const stateEl  = document.getElementById('f-state');
+
+  // Clear previous
+  clearTimeout(pinTimer);
+  cityEl.value  = '';
+  stateEl.value = '';
+
+  if (val.length < 6) {
+    statusEl.textContent = '';
+    statusEl.style.color = '';
+    return;
+  }
+
+  statusEl.textContent = '⏳ Fetching...';
+  statusEl.style.color = 'var(--text-muted)';
+
+  pinTimer = setTimeout(() => fetchPincode(val), 400);
+}
+
+function fetchPincode(pin) {
+  const statusEl = document.getElementById('pin-status');
+  const cityEl   = document.getElementById('f-city');
+  const stateEl  = document.getElementById('f-state');
+
+  fetch(`https://api.postalpincode.in/pincode/${pin}`)
+    .then(r => r.json())
+    .then(data => {
+      if (data && data[0] && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+        const po = data[0].PostOffice[0];
+        // Use District as city; fallback to Division or Name
+        const city = po.District || po.Division || po.Name || '';
+        const state = po.State || '';
+        cityEl.value  = city;
+        stateEl.value = state;
+        cityEl.style.color  = 'var(--text)';
+        stateEl.style.color = 'var(--text)';
+        statusEl.textContent = '✅ Found';
+        statusEl.style.color = 'var(--green)';
+      } else {
+        statusEl.textContent = '❌ Invalid PIN';
+        statusEl.style.color = 'var(--red)';
+      }
+    })
+    .catch(() => {
+      statusEl.textContent = '⚠️ Lookup failed';
+      statusEl.style.color = 'var(--saffron)';
+    });
+}
+
+
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+}
+</script>
+</body>
+</html>
